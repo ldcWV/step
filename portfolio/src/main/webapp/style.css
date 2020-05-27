@@ -26,6 +26,13 @@
   max-width: 300px;
 }
 
+#chessimages img {
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  width: 300px;
+}
+
 .h1 {
   margin-left: auto;
   margin-right: auto;
