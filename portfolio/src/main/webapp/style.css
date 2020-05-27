@@ -4,6 +4,12 @@
   width: 650px;
 }
 
+.home img {
+  display: block;
+  max-height: 50px;
+  max-width: 50px;
+}
+
 .avatar img {
   display: block;
   margin-left: auto;
