@@ -12,20 +12,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+var clickCounter = 0;
+
 /**
- * Adds a random fact to the page.
+ * Increments the click counter.
  */
-function addRandomFact() {
-  const facts =
-      ['I\'m a rising sophomore at Carnegie Mellon University',
-       'I have a cat named Pluto',
-       'In my free time, I play video games, listen to music, and occasionally play chess',
-       'I was born with an extra finger on my right hand next to my thumb, which was amputated'];
-
-  // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
+function countClick() {
+    clickCounter++;
+    const clickcounterContainer = document.getElementById('clickcounter-container');
+    clickcounterContainer.innerText = clickCounter;
+    const favnumberContainer = document.getElementById('favnumber-container');
+    if(clickCounter == 57) {
+        favnumberContainer.innerText = " is my favorite number!";
+    } else {
+        favnumberContainer.innerText = " is not my favorite number...";
+    }
 }
