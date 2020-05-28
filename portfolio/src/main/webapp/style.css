@@ -75,3 +75,19 @@ body {
   background-color: darkorange;
   color: white;
 }
+
+#number-button button {
+  background-color: lemonchiffon;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 20px;
+  display: block;
+  margin: auto;
+}
+
+#number-button button:hover {
+  background-color: darkorange;
+  color: white;
+}

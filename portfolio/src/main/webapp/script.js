@@ -22,7 +22,7 @@ function countClick() {
     const clickcounterContainer = document.getElementById('clickcounter-container');
     clickcounterContainer.innerText = clickCounter;
     const favnumberContainer = document.getElementById('favnumber-container');
-    if(clickCounter == 57) {
+    if(clickCounter == 23) {
         favnumberContainer.innerText = " is my favorite number!";
     } else {
         favnumberContainer.innerText = " is not my favorite number...";
