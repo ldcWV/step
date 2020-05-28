@@ -33,12 +33,30 @@
   width: 300px;
 }
 
-.h1 {
+h1 {
   margin-left: auto;
   margin-right: auto;
-  font-family: "Trebuchet MS", Helvetica, sans-serif
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.body {
-    font-family: "Trebuchet MS", Helvetica, sans-serif
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.menu {
+  padding: 10px;
+  font-size: 20px;
+}
+
+.menu a {
+  padding: 10px 15px;
+  border: 0px;
+  background-color: lemonchiffon;
+  color: black;
+  text-decoration: none;
+}
+
+.menu a:hover {
+  background-color: darkorange;
+  color: white;
 }
