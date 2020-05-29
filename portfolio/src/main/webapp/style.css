@@ -44,7 +44,7 @@
 }
 
 body {
-  background-image: url("images/bk.jpg");
+  background: #303030 url("images/bk.jpg");
   background-size: 105%
 }
 
