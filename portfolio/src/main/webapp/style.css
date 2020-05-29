@@ -2,9 +2,15 @@
   margin-left: auto;
   margin-right: auto;
   width: 650px;
-  height: 1000px;
+  min-height: 1000px;
   background-color: white;
   padding: 50px;
+  color: darkslategrey;
+  border-width: 2px;
+  border-color: black;
+  border-radius: 5px;
+  border-style: solid;
+  margin-top: 20px;
 }
 
 .avatar img {
@@ -16,13 +22,6 @@
 }
 
 .catpicture img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 300px;
-}
-
-.icpcpicture img {
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -64,7 +63,10 @@ body {
 }
 
 .linklist {
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
   width: 30%;
   text-align: center;
   font-size: 20px;
@@ -91,7 +93,10 @@ body {
   text-align: center;
   font-size: 20px;
   display: block;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 #number-button button:hover {
