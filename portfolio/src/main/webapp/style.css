@@ -3,14 +3,15 @@
   margin-right: auto;
   width: 650px;
   min-height: 1000px;
-  background-color: white;
+  background-color: #303030;
   padding: 50px;
-  color: darkslategrey;
+  color: white;
   border-width: 2px;
   border-color: black;
   border-radius: 5px;
   border-style: solid;
   margin-top: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .avatar img {
@@ -19,6 +20,7 @@
   margin-right: auto;
   max-height: 100px;
   max-width: 100px;
+  margin-bottom: 20px;
 }
 
 .catpicture img {
@@ -35,12 +37,7 @@
   width: 300px;
 }
 
-h1 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 body {
-  font-family: Arial, Helvetica, sans-serif;
   background-image: url("images/bk.jpg");
   background-size: 105%
 }
@@ -48,13 +45,18 @@ body {
 .menu {
   padding: 10px;
   font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .menu a {
   padding: 10px 15px;
-  background-color: lemonchiffon;
-  color: black;
+  background-color: #303030;
+  color: white;
   text-decoration: none;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: white;
+  border-style: solid;
 }
 
 .menu a:hover {
@@ -73,11 +75,15 @@ body {
 }
 
 .linklist a {
-  background-color: lemonchiffon;
-  color: black;
-  text-decoration: none;
   padding: 10px;
   display: block;
+  background-color: #303030;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: white;
+  border-style: solid;
 }
 
 .linklist a:hover {
@@ -86,20 +92,14 @@ body {
 }
 
 #number-button button {
-  background-color: lemonchiffon;
-  color: black;
-  border: none;
-  padding: 10px 20px;
-  text-align: center;
-  font-size: 20px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-
-#number-button button:hover {
   background-color: darkorange;
   color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  border-width: 0px;
+  border-radius: 2px;
+  font-size: 15px;
+}
+
+a {
+  color: gold;
 }

@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>About me</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/avatar.jpg">
+    <script src="script.js"></script>
     <div class=menu>
       <a href="index.html">Home</a>
       <a href="aboutme.html">About Me</a>
-      <a href="projects.html">My Projects</a>
-      <a href="number.html">Find my favorite number!</a>
+      <a href="projects.html">Projects</a>
       <a href="links.html">Other Links</a>
     </div>
   </head>
@@ -16,20 +17,29 @@
     <div id="content">
       <h1>About me</h1>
       <p>
-        Hello! My name is Lawrence and I am a rising sophomore at  
+        My name is Lawrence and I am a rising sophomore at  
         Carnegie Mellon University studying computer science. I've 
         lived in Princeton, NJ since 7th grade.
       </p>
       <p>
         Some of my hobbies are listening to music and playing video 
-        games. I also really enjoy games that require me to think hard, 
-        such as Tetris, poker, and Avalon. Recently, I've been playing 
-        a bit of chess.
+        games. I also enjoy playing board games, such as Poker, Avalon,
+        and Chess.
       </p>
       <p>
         I also have a cat named Pluto!
         <div class=catpicture><img src="images/pluto.jpg"/></div>
       </p>
+      Some more quick facts about me:
+      <ul>
+        <li>
+          My favorite color is orange.
+        </li>
+        <li>
+          <span id="number-button"><button onclick="countClick()">Click me!</button></span>
+          <span id="clickcounter-container">0</span><span id="favnumber-container"> is not my favorite number...</span>
+        </li>
+      </ul>
     </div>
   </body>
 </html>
