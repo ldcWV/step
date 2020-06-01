@@ -14,6 +14,6 @@
 
 async function fetchMessage() {
     const response = await fetch('/data');
-    const message = await response.text();
-    document.getElementById('fetchmessage-container').innerText = message;
+    const message = await response.json();
+    document.getElementById("fetchmessage-container").innerText = message;
 }
