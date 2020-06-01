@@ -5,7 +5,6 @@
     <title>About me</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/avatar.jpg">
-    <script src="script.js"></script>
     <div class=topbar>
       <div class=name>Lawrence Chen</div>
       <span class=menu>
@@ -25,7 +24,7 @@
       <h1>About me</h1>
       <p>
         My name is Lawrence and I am a rising sophomore at  
-        Carnegie Mellon University studying computer science. I've 
+        Carnegie Mellon University studying computer science. I've
         lived in Princeton, NJ since 7th grade.
       </p>
       <p>
@@ -37,16 +36,14 @@
         I also have a cat named Pluto!
         <div class=pic><img src="images/pluto.jpg"/></div>
       </p>
-      Some more quick facts about me:
-      <ul>
-        <li>
-          My favorite color is orange.
-        </li>
-        <li>
-          <span id="number-button"><button onclick="countClick()">Click me!</button></span>
-          <span id="clickcounter-container">0</span><span id="favnumber-container"> is not my favorite number...</span>
-        </li>
-      </ul>
+      You can guess my favorite number here:
+      <form id="guesser">
+        <label for="guess">Enter your guess:</label>
+        <input type="number" id="guess" name="guess" min=0 max=999 step=1 value=0 }></input>
+        <input type="submit" id="submit" onclick="submitNum()"></input>
+      </form>
+      <span id="guess-value"></span><span id="guess-feedback"></span>
     </div>
+    <script src="guesslogic.js"></script>
   </body>
 </html>

@@ -131,7 +131,7 @@ body {
   color: white;
 }
 
-#number-button button {
+#submit {
   background-color: darkorange;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
