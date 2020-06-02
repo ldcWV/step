@@ -37,6 +37,8 @@ public class DataServlet extends HttpServlet {
         response.setContentType("application/json");
         ArrayList<Comment> coms = new ArrayList<>();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        int lim = getCommentLimit(request);
+        int cnt = 0;
 
         Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
@@ -44,6 +46,8 @@ public class DataServlet extends HttpServlet {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
             coms.add(new Comment(username, comment));
+            cnt++;
+            if(cnt == lim) break;
         }
 
         String json = new Gson().toJson(coms);
@@ -69,5 +73,14 @@ public class DataServlet extends HttpServlet {
 
     private String getClientComment(HttpServletRequest request) {
         return request.getParameter("comment");
+    }
+
+    private int getCommentLimit(HttpServletRequest request) {
+        String s = request.getQueryString();
+        if(s == null) {
+            return 10;
+        } else {
+            return Integer.parseInt(s.substring(8,s.length()));
+        }
     }
 }

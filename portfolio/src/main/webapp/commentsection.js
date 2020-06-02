@@ -13,8 +13,11 @@
 // limitations under the License.
 
 function getComments() {
-    fetch('/comment-data').then(response => response.json()).then((coms) => {
+    const showNum = getCommentLimit();
+    document.getElementById('shownum').value = parseInt(showNum);
+    fetch('/comment-data?shownum='+showNum).then(response => response.json()).then((coms) => {
         const commentsContainer = document.getElementById("commentsection-container");
+        commentsContainer.innerHTML = "";
         coms.forEach((line) => {
             commentsContainer.appendChild(createComment(line));
         });
@@ -25,5 +28,14 @@ function createComment(commentData) {
     const res = document.createElement("li");
     let text = commentData.username;
     res.innerText = text.concat(": ", commentData.comment);
+    return res;
+}
+
+function getCommentLimit() {
+    let tmp = (new URL(document.location)).searchParams;
+    let res = tmp.get("shownum");
+    if(!res || res.length === 0) {
+        return "10";
+    }
     return res;
 }
