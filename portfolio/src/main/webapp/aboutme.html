@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>About me</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/avatar.jpg">
+    <div class=topbar>
+      <div class=name>Lawrence Chen</div>
+      <span class=menu>
+        <a href="index.html">Home</a>
+        <a href="aboutme.html">About Me</a>
+        <a href="projects.html">Projects</a>
+      </span>
+      <span class=otherlinks>
+        <a href="resume.pdf">Resume</a>
+        <a href="https://www.linkedin.com/in/lawrence-chen-6ab742158/">LinkedIn</a>
+        <a href="https://github.com/ldcWV">GitHub</a>
+      </span>
+    </div>
+  </head>
+  <body>
+    <div id="content">
+      <h1>About me</h1>
+      <p>
+        My name is Lawrence and I am a rising sophomore at  
+        Carnegie Mellon University studying computer science. I've
+        lived in Princeton, NJ since 7th grade.
+      </p>
+      <p>
+        Some of my hobbies are listening to music and playing video 
+        games. I also enjoy playing board games, such as Poker, Avalon,
+        and Chess.
+      </p>
+      <p>
+        I also have a cat named Pluto!
+        <div class=pic><img src="images/pluto.jpg"/></div>
+      </p>
+      You can guess my favorite number here:
+      <form id="guesser">
+        <label for="guess">Enter your guess:</label>
+        <input type="number" id="guess" name="guess" min=0 max=999 step=1 value=0 }></input>
+        <input type="submit" id="submit" onclick="submitNum()"></input>
+      </form>
+      <span id="guess-value"></span><span id="guess-feedback"></span>
+    </div>
+    <script src="guesslogic.js"></script>
+  </body>
+</html>

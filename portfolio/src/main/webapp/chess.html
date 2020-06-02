@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Chess AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/avatar.jpg">
+    <div class=topbar>
+      <div class=name>Lawrence Chen</div>
+      <span class=menu>
+        <a href="index.html">Home</a>
+        <a href="aboutme.html">About Me</a>
+        <a href="projects.html">Projects</a>
+      </span>
+      <span class=otherlinks>
+        <a href="resume.pdf">Resume</a>
+        <a href="https://www.linkedin.com/in/lawrence-chen-6ab742158/">LinkedIn</a>
+        <a href="https://github.com/ldcWV">GitHub</a>
+      </span>
+    </div>
+  </head>
+  <body>
+    <div id="content">
+      <h1>Chess AI</h1>
+      <p>I coded this chess AI in 12th grade. It uses Minimax with several modifications, including:</p>
+      <ul>
+        <li>Alpha-beta pruning (reduces the number of nodes we have to search)</li>
+        <li>Killer moves (prioritizes moves in which pieces are taken)</li>
+        <li>Iterative deepening (stops evaluating after a certain time limit)</li>
+        <li>Advanced evaluation functions (gives an estimate for who is winning and by how much given a board state)</li>
+      </ul>
+      Here are some screenshots of moves my AI made in various positions:
+      <div id="chessimages">
+        <a href="images/chess1.jpg"><img src="images/chess1.jpg"/></a>
+        <a href="images/chess2.jpg"><img src="images/chess2.jpg"/></a>
+        <a href="images/chess3.jpg"><img src="images/chess3.jpg"/></a>
+        <a href="images/chess4.jpg"><img src="images/chess4.jpg"/></a>
+      </div>
+      The source code for this project can be found <a href="https://github.com/ldcWV/ChessAI">here</a>.
+    </div>
+  </body>
+</html>
