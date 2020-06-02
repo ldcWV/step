@@ -43,9 +43,16 @@
   width: 300px;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background: #303030 url("images/bk.jpg");
   background-size: 105%;
+  background-attachment: fixed;
+  background-position: center bottom;
   margin: 0px;
 }
 
@@ -73,7 +80,7 @@ body {
 
 .menu a {
   position: relative;
-  right: -20px;
+  left: 20px;
   float: left;
   margin: 5px;
   padding: 10px 15px;
@@ -87,7 +94,9 @@ body {
 }
 
 .otherlinks a {
+  position: relative;
   float: right;
+  right: 20px;
   margin: 5px;
   padding: 10px 15px;
   background-color: #303030;
