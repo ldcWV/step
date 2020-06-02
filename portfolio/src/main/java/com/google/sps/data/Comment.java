@@ -12,8 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-async function fetchMessage() {
-    const response = await fetch('/data');
-    const message = await response.json();
-    document.getElementById("fetchmessage-container").innerText = message;
+package com.google.sps.data;
+
+// Represents a single comment with a username and the content of the comment.
+public class Comment {
+    private String username;
+    private String comment;
+    
+    public Comment(String USERNAME, String COMMENT) {
+        this.username = USERNAME;
+        this.comment = COMMENT;
+    }
 }

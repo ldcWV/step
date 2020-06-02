@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.util.ArrayList;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -23,19 +24,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet("/comment-data")
 public class DataServlet extends HttpServlet {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
+    private ArrayList<Comment> coms = new ArrayList<>();
 
-    ArrayList<String> messages = new ArrayList<>();
-    messages.add("msg1");
-    messages.add("msg2");
-    messages.add("msg3");
-    Gson gson = new Gson();
-    String json = gson.toJson(messages);
-    response.getWriter().println(json);
-  }
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        String json = new Gson().toJson(coms);
+        response.getWriter().println(json);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        coms.add(new Comment(getClientUsername(request), getClientComment(request)));
+        response.sendRedirect("/index.html");
+    }
+    
+    private String getClientUsername(HttpServletRequest request) {
+        return request.getParameter("username");
+    }
+
+    private String getClientComment(HttpServletRequest request) {
+        return request.getParameter("comment");
+    }
 }

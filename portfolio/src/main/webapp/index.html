@@ -19,14 +19,22 @@
       </span>
     </div>
   </head>
-  <body>
+  <body onload="getComments()">
     <div id="content">
       <h1>Welcome to Lawrence's personal website!</h1>
       <div class=avatar><img src="images/avatar.jpg"/></div>
       Hello! Click through the links on the top left for more information about me.
-      <div><button onclick="fetchMessage()">Click to fetch a message</button></div>
-      <div id="fetchmessage-container"></div>
-      <script src="script.js"></script>
+      <h3>Comments</h3>
+      <form action="/comment-data" method="POST">
+        <label for="username">Username (this will be displayed):</label><br>
+        <input type="text" name="username"></input><br><br>
+        <label for="comment">Type a comment here:</label><br>
+        <textarea name="comment" rows="4" cols="70"></textarea><br>
+        <input type="submit" id="submit"></input>
+      </form>
+
+      <ul id="commentsection-container"></ul>
+      <script src="commentsection.js"></script>
     </div>
   </body>
 </html>
