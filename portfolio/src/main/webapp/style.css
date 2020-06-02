@@ -152,3 +152,7 @@ body {
 a {
   color: gold;
 }
+
+#commentsection-container {
+    word-wrap: break-word;
+}
