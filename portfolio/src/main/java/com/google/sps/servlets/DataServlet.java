@@ -40,12 +40,13 @@ public class DataServlet extends HttpServlet {
         int lim = getCommentLimit(request);
         int cnt = 0;
 
-        Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+        Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
         for (Entity entity : results.asIterable()) {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
-            comments.add(new Comment(username, comment));
+            long time = (long)entity.getProperty("time");
+            comments.add(new Comment(username, comment, System.currentTimeMillis()-time));
             cnt++;
             if(cnt == lim) break;
         }
@@ -59,7 +60,7 @@ public class DataServlet extends HttpServlet {
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("username", getClientUsername(request));
         commentEntity.setProperty("comment", getClientComment(request));
-        commentEntity.setProperty("timestamp", System.currentTimeMillis());
+        commentEntity.setProperty("time", System.currentTimeMillis());
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);

@@ -32,11 +32,26 @@ function createComment(commentData) {
     username.setAttribute("class", "username");
     username.innerText = commentData.username + ":";
 
+    let time = document.createElement("div");
+    time.setAttribute("class", "time");
+    if(commentData.time < 1000*60) {
+        time.innerText = Math.floor(commentData.time/1000) + " seconds ago";
+    } else if(commentData.time < 1000*60*60) {
+        time.innerText = Math.floor(commentData.time/(1000*60)) + " minutes ago";
+    } else if(commentData.time < 1000*60*60*24) {
+        time.innerText = Math.floor(commentData.time/(1000*60*60)) + " hours ago";
+    } else if(commentData.time < 1000*60*60*24*365) {
+        time.innerText = Math.floor(commentData.time/(1000*60*60*24)) + " days ago";
+    } else {
+        time.innerText = Math.floor(commentData.time/(1000*60*60*24*365)) + " years ago";
+    }
+
     let comment = document.createElement("div");
     comment.setAttribute("class", "comment");
     comment.innerText = commentData.comment;
     
     res.appendChild(username);
+    res.appendChild(time);
     res.appendChild(comment);
     return res;
 }

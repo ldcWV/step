@@ -18,9 +18,11 @@ package com.google.sps.data;
 public class Comment {
     private final String username;
     private final String comment;
+    private final long time;
     
-    public Comment(String username, String comment) {
+    public Comment(String username, String comment, long time) {
         this.username = username;
         this.comment = comment;
+        this.time = time;
     }
 }

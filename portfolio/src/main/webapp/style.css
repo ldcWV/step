@@ -163,9 +163,19 @@ a {
 #commentsection-container .single-comment .username {
     font-size: 12px;
     font-style: italic;
+    float: left;
+    width: 50%;
+}
+
+#commentsection-container .single-comment .time {
+    font-size: 12px;
+    float: right;
+    text-align: right;
+    width: 50%;
 }
 
 #commentsection-container .single-comment .comment {
+    margin-top: 20px;
     font-size: 15px;
 }
 
@@ -175,7 +185,7 @@ a {
 
 #commentlim {
     float: left;
-    width: 80%;
+    width: 60%;
 }
 
 #deletebutton {
