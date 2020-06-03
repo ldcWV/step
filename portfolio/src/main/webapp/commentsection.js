@@ -13,15 +13,27 @@
 // limitations under the License.
 
 function getComments() {
-    const showNum = getCommentLimit();
-    document.getElementById('shownum').value = parseInt(showNum);
-    fetch('/comment-data?shownum='+showNum).then(response => response.json()).then((comments) => {
+    const perBlock = getCommentsPerBlock();
+    document.getElementById('perblock').value = parseInt(perBlock);
+    fetch('/comment-data?perblock='+(perBlock*blockIdx)).then(response => response.json()).then((data) => {
+        let comments = data.comments;
         const commentsContainer = document.getElementById("commentsection-container");
         commentsContainer.innerHTML = "";
         comments.forEach((line) => {
             commentsContainer.appendChild(createComment(line));
         });
+        if(data.totalCommentCount <= perBlock * blockIdx) {
+            let showmorebutton = document.getElementById("showmorebutton");
+            showmorebutton.style.display = "none";
+        }
     });
+}
+
+var blockIdx = 1;
+
+function showMore() {
+    blockIdx++;
+    getComments();
 }
 
 function createComment(commentData) {
@@ -68,9 +80,9 @@ function createComment(commentData) {
     return res;
 }
 
-function getCommentLimit() {
+function getCommentsPerBlock() {
     let tmp = (new URL(document.location)).searchParams;
-    let res = tmp.get("shownum");
+    let res = tmp.get("perblock");
     if(!res || res.length === 0) {
         return "10";
     }

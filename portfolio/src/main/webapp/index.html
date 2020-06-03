@@ -33,9 +33,9 @@
         <input type="submit" id="submit"></input>
       </form>
       <br><br>
-      <form id="commentlim" method="GET">
-        <label for="shownum">Maximum number of comments to show:</label>
-        <input type="number" name="shownum" id="shownum" min=5 step=1></input>
+      <form id="perblock-form" method="GET">
+        <label for="perblock">Comments to show at a time:</label>
+        <input type="number" name="perblock" id="perblock" min=5 step=1></input>
         <input type="submit" id="submit" value="Show"></input>
       </form>
       <button onclick="deleteAllComments()" id="deletebutton">Delete comments</button>

@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.sps.data.Comment;
+import com.google.sps.data.CommentList;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -24,6 +25,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.datastore.FetchOptions;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,7 +40,7 @@ public class DataServlet extends HttpServlet {
         response.setContentType("application/json");
         ArrayList<Comment> comments = new ArrayList<>();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        int lim = getCommentLimit(request);
+        int lim = getCommentsPerBlock(request);
         int cnt = 0;
 
         Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
@@ -52,7 +54,8 @@ public class DataServlet extends HttpServlet {
             comments.add(new Comment(username, comment, System.currentTimeMillis()-time));
         }
 
-        String json = new Gson().toJson(comments);
+        CommentList data = new CommentList(comments, results.countEntities(FetchOptions.Builder.withLimit(100000)));
+        String json = new Gson().toJson(data);
         response.getWriter().println(json);
     }
 
@@ -77,7 +80,7 @@ public class DataServlet extends HttpServlet {
         return request.getParameter("comment");
     }
 
-    private int getCommentLimit(HttpServletRequest request) {
-        return Integer.parseInt(request.getParameter("shownum"));
+    private int getCommentsPerBlock(HttpServletRequest request) {
+        return Integer.parseInt(request.getParameter("perblock"));
     }
 }

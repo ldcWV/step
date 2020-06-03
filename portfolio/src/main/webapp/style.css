@@ -185,7 +185,7 @@ textarea {
     height: 100px;
 }
 
-#commentlim {
+#perblock-form {
     float: left;
     width: 60%;
 }
@@ -195,7 +195,7 @@ textarea {
     width: 20%;
 }
 
-#commentlim #shownum {
+#perblock-form #perblock {
     width: 40px;
 }
 
