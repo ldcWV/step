@@ -25,9 +25,19 @@ function getComments() {
 }
 
 function createComment(commentData) {
-    const res = document.createElement("li");
-    let text = commentData.username;
-    res.innerText = text.concat(": ", commentData.comment);
+    let res = document.createElement("div");
+    res.setAttribute("class", "single-comment");
+    
+    let username = document.createElement("div");
+    username.setAttribute("class", "username");
+    username.innerText = commentData.username + ":";
+
+    let comment = document.createElement("div");
+    comment.setAttribute("class", "comment");
+    comment.innerText = commentData.comment;
+    
+    res.appendChild(username);
+    res.appendChild(comment);
     return res;
 }
 

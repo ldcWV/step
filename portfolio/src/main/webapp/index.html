@@ -29,17 +29,18 @@
         <label for="username">Username (this will be displayed):</label><br>
         <input type="text" name="username"></input><br><br>
         <label for="comment">Comment here:</label><br>
-        <textarea name="comment" rows="4" cols="70"></textarea><br> <!-- todo: test size of this on different devices -->
+        <textarea name="comment" rows=4 cols=70></textarea><br> <!-- todo: test size of this on different devices -->
         <input type="submit" id="submit"></input>
       </form>
       <br><br>
       <form id="commentlim" method="GET">
         <label for="shownum">Maximum number of comments to show:</label>
         <input type="number" name="shownum" id="shownum" min=5 step=1></input>
-        <input type="submit" id="submit"></input>
+        <input type="submit" id="submit" value="Show"></input>
       </form>
-      <button onclick="deleteAllComments()">Delete comments</button>
-      <ul id="commentsection-container"></ul>
+      <button onclick="deleteAllComments()" id="deletebutton">Delete comments</button>
+      <br><br>
+      <div id="commentsection-container"></div>
       <script src="commentsection.js"></script>
     </div>
   </body>

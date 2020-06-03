@@ -134,7 +134,7 @@ body {
   color: white;
 }
 
-#submit {
+#submit, #deletebutton {
   background-color: darkorange;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -149,4 +149,40 @@ a {
 
 #commentsection-container {
     word-wrap: break-word;
+    margin: 0px 20px;
+}
+
+#commentsection-container .single-comment {
+    background-color: rgba(116, 116, 116, 0.911);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+#commentsection-container .single-comment .username {
+    font-size: 12px;
+    font-style: italic;
+}
+
+#commentsection-container .single-comment .comment {
+    font-size: 15px;
+}
+
+.textarea {
+    font-family: inherit;
+}
+
+#commentlim {
+    float: left;
+    width: 80%;
+}
+
+#deletebutton {
+    float: right;
+    width: 20%;
+}
+
+#commentlim #shownum {
+    width: 40px;
 }
