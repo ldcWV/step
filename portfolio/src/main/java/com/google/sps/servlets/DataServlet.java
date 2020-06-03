@@ -15,6 +15,7 @@
 package com.google.sps.servlets;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import com.google.sps.data.Comment;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
@@ -43,12 +44,12 @@ public class DataServlet extends HttpServlet {
         Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
         for (Entity entity : results.asIterable()) {
+            cnt++;
+            if(cnt > lim) break;
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
             comments.add(new Comment(username, comment, System.currentTimeMillis()-time));
-            cnt++;
-            if(cnt == lim) break;
         }
 
         String json = new Gson().toJson(comments);
@@ -77,11 +78,6 @@ public class DataServlet extends HttpServlet {
     }
 
     private int getCommentLimit(HttpServletRequest request) {
-        String s = request.getQueryString();
-        if(s == null) {
-            return 10;
-        } else {
-            return Integer.parseInt(s.substring(8,s.length()));
-        }
+        return Integer.parseInt(request.getParameter("shownum"));
     }
 }
