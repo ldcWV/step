@@ -39,3 +39,9 @@ function getCommentLimit() {
     }
     return res;
 }
+
+function deleteAllComments() {
+    fetch('/delete-data', {method: 'post'}).then(response => {
+        getComments();
+    });
+}
