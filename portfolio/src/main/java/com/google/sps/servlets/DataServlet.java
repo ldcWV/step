@@ -15,7 +15,15 @@
 package com.google.sps.servlets;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import com.google.sps.data.Comment;
 import com.google.gson.Gson;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,19 +31,53 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet("/comment-data")
 public class DataServlet extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        ArrayList<Comment> comments = new ArrayList<>();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        int lim = getCommentLimit(request);
+        int cnt = 0;
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
+        Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
+        PreparedQuery results = datastore.prepare(query);
+        for (Entity entity : results.asIterable()) {
+            cnt++;
+            if(cnt > lim) break;
+            String username = (String)entity.getProperty("username");
+            String comment = (String)entity.getProperty("comment");
+            long time = (long)entity.getProperty("time");
+            comments.add(new Comment(username, comment, System.currentTimeMillis()-time));
+        }
 
-    ArrayList<String> messages = new ArrayList<>();
-    messages.add("msg1");
-    messages.add("msg2");
-    messages.add("msg3");
-    Gson gson = new Gson();
-    String json = gson.toJson(messages);
-    response.getWriter().println(json);
-  }
+        String json = new Gson().toJson(comments);
+        response.getWriter().println(json);
+    }
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("username", getClientUsername(request));
+        commentEntity.setProperty("comment", getClientComment(request));
+        commentEntity.setProperty("time", System.currentTimeMillis());
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+
+        response.sendRedirect("/index.html");
+    }
+    
+    private String getClientUsername(HttpServletRequest request) {
+        return request.getParameter("username");
+    }
+
+    private String getClientComment(HttpServletRequest request) {
+        return request.getParameter("comment");
+    }
+
+    private int getCommentLimit(HttpServletRequest request) {
+        return Integer.parseInt(request.getParameter("shownum"));
+    }
 }

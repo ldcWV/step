@@ -1,16 +1,10 @@
 #content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
-  min-height: 1000px;
-  background-color: #303030;
-  padding: 50px;
+  margin: auto;
+  width: 750px;
+  min-height: 500px;
+  background-color: #303030e1;
+  padding: 50px 50px 200px 50px;
   color: white;
-  border-width: 2px;
-  border-color: black;
-  border-radius: 5px;
-  border-style: solid;
-  margin-top: 20px;
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -43,14 +37,21 @@
   width: 300px;
 }
 
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background: #303030 url("images/bk.jpg");
   background-size: 105%;
+  background-attachment: fixed;
+  background-position: center bottom;
   margin: 0px;
 }
 
 .topbar {
-  background-color: #303030e0;
+  background-color: #303030;
   width: 100%;
   min-height: 150px;
   font-size: 40px;
@@ -73,11 +74,11 @@ body {
 
 .menu a {
   position: relative;
-  right: -20px;
+  left: 20px;
   float: left;
   margin: 5px;
   padding: 10px 15px;
-  background-color: #303030;
+  background-color: #5e5e5e;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -87,10 +88,12 @@ body {
 }
 
 .otherlinks a {
+  position: relative;
   float: right;
+  right: 20px;
   margin: 5px;
   padding: 10px 15px;
-  background-color: #303030;
+  background-color: #5e5e5e;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -131,7 +134,7 @@ body {
   color: white;
 }
 
-#submit {
+button {
   background-color: darkorange;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -142,4 +145,61 @@ body {
 
 a {
   color: gold;
+}
+
+#commentsection-container {
+    word-wrap: break-word;
+    margin: 0px 20px;
+}
+
+#commentsection-container .single-comment {
+    background-color: rgba(116, 116, 116, 0.911);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0px;
+}
+
+#commentsection-container .single-comment .username {
+    font-size: 12px;
+    font-style: italic;
+    float: left;
+    width: 50%;
+}
+
+#commentsection-container .single-comment .time {
+    font-size: 12px;
+    float: right;
+    text-align: right;
+    width: 50%;
+}
+
+#commentsection-container .single-comment .comment {
+    margin-top: 20px;
+    font-size: 15px;
+}
+
+textarea {
+    font-family: inherit;
+    width: 100%;
+    height: 100px;
+}
+
+#commentlim {
+    float: left;
+    width: 60%;
+}
+
+#deletebutton {
+    float: right;
+    width: 20%;
+}
+
+#commentlim #shownum {
+    width: 40px;
+}
+
+#showmorebutton {
+    display: block;
+    margin: auto;
 }
