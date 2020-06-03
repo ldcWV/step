@@ -34,17 +34,29 @@ function createComment(commentData) {
 
     let time = document.createElement("div");
     time.setAttribute("class", "time");
+    let val = -1;
+    let units = "";
     if(commentData.time < 1000*60) {
-        time.innerText = Math.floor(commentData.time/1000) + " seconds ago";
+        val = Math.floor(commentData.time/1000);
+        units = "second";
     } else if(commentData.time < 1000*60*60) {
-        time.innerText = Math.floor(commentData.time/(1000*60)) + " minutes ago";
+        val = Math.floor(commentData.time/(1000*60));
+        units = "minute";
     } else if(commentData.time < 1000*60*60*24) {
-        time.innerText = Math.floor(commentData.time/(1000*60*60)) + " hours ago";
+        val = Math.floor(commentData.time/(1000*60*60));
+        units = "hour";
     } else if(commentData.time < 1000*60*60*24*365) {
-        time.innerText = Math.floor(commentData.time/(1000*60*60*24)) + " days ago";
+        val = Math.floor(commentData.time/(1000*60*60*24));
+        units = "day";
     } else {
-        time.innerText = Math.floor(commentData.time/(1000*60*60*24*365)) + " years ago";
+        val = Math.floor(commentData.time/(1000*60*60*24));
+        units = "year";
     }
+    time.innerText = val + " " + units;
+    if(val != 1) {
+        time.innerText += "s";
+    }
+    time.innerText += " ago";
 
     let comment = document.createElement("div");
     comment.setAttribute("class", "comment");
