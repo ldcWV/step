@@ -35,7 +35,7 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
-        ArrayList<Comment> coms = new ArrayList<>();
+        ArrayList<Comment> comments = new ArrayList<>();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         int lim = getCommentLimit(request);
         int cnt = 0;
@@ -45,12 +45,12 @@ public class DataServlet extends HttpServlet {
         for (Entity entity : results.asIterable()) {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
-            coms.add(new Comment(username, comment));
+            comments.add(new Comment(username, comment));
             cnt++;
             if(cnt == lim) break;
         }
 
-        String json = new Gson().toJson(coms);
+        String json = new Gson().toJson(comments);
         response.getWriter().println(json);
     }
 

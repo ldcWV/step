@@ -15,10 +15,10 @@
 function getComments() {
     const showNum = getCommentLimit();
     document.getElementById('shownum').value = parseInt(showNum);
-    fetch('/comment-data?shownum='+showNum).then(response => response.json()).then((coms) => {
+    fetch('/comment-data?shownum='+showNum).then(response => response.json()).then((comments) => {
         const commentsContainer = document.getElementById("commentsection-container");
         commentsContainer.innerHTML = "";
-        coms.forEach((line) => {
+        comments.forEach((line) => {
             commentsContainer.appendChild(createComment(line));
         });
     });

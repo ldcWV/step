@@ -16,11 +16,11 @@ package com.google.sps.data;
 
 // Represents a single comment with a username and the content of the comment.
 public class Comment {
-    private String username;
-    private String comment;
+    private final String username;
+    private final String comment;
     
-    public Comment(String USERNAME, String COMMENT) {
-        this.username = USERNAME;
-        this.comment = COMMENT;
+    public Comment(String username, String comment) {
+        this.username = username;
+        this.comment = comment;
     }
 }
