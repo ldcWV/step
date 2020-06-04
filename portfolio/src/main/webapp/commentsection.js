@@ -40,6 +40,34 @@ function createComment(commentData) {
     let res = document.createElement("div");
     res.setAttribute("class", "single-comment");
     
+    let voting = document.createElement("div");
+    voting.setAttribute("class", "voting");
+
+    let upvote = document.createElement("div");
+    upvote.setAttribute("class", "upvote");
+    let upvoteSymbol = document.createElement("div");
+    upvoteSymbol.setAttribute("class", "upvoteSymbol");
+    upvoteSymbol.innerText = "▲";
+    let upvoteCount = document.createElement("div");
+    upvoteCount.setAttribute("class", "upvoteCount");
+    upvoteCount.innerText = "0";
+    upvote.appendChild(upvoteSymbol);
+    upvote.appendChild(upvoteCount);
+
+    let downvote = document.createElement("div");
+    downvote.setAttribute("class", "downvote");
+    let downvoteSymbol = document.createElement("div");
+    downvoteSymbol.setAttribute("class", "downvoteSymbol");
+    downvoteSymbol.innerText = "▼";
+    let downvoteCount = document.createElement("div");
+    downvoteCount.setAttribute("class", "downvoteCount");
+    downvoteCount.innerText = "0";
+    downvote.appendChild(downvoteSymbol);
+    downvote.appendChild(downvoteCount);
+
+    voting.appendChild(upvote);
+    voting.appendChild(downvote);
+
     let commentHeader = document.createElement("div");
     commentHeader.setAttribute("class", "comment-header");
 
@@ -84,8 +112,10 @@ function createComment(commentData) {
     
     commentHeader.appendChild(username);
     commentHeader.appendChild(deleteButton);
+
     res.appendChild(commentHeader);
     res.appendChild(comment);
+    res.appendChild(voting);
     return res;
 }
 

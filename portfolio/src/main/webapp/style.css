@@ -206,3 +206,47 @@ textarea {
     display: block;
     margin: auto;
 }
+
+.voting {
+    height: 20px;
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+.voting .upvote {
+    min-width: 50px;
+    float: left;
+    margin-right: 10px;
+}
+
+.voting .upvote:hover {
+    color: lightgreen;
+    cursor: pointer;
+}
+
+.voting .upvote .upvoteSymbol {
+    float: left;
+    width: 10px;
+    margin-right: 10px;
+}
+
+.voting .upvote .upvoteCount {
+    float: left;
+}
+
+.voting .downvote {
+    min-width: 50px;
+    float: left;
+    white-space: nowrap;
+}
+
+.voting .downvote:hover {
+    color: #ff6e63;
+    cursor: pointer;
+}
+
+.voting .downvote .downvoteSymbol {
+    float: left;
+    width: 10px;
+    margin-right: 10px;
+}
