@@ -51,7 +51,8 @@ public class DataServlet extends HttpServlet {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
-            comments.add(new Comment(username, comment, System.currentTimeMillis()-time));
+            long id = entity.getKey().getId();
+            comments.add(new Comment(username, comment, System.currentTimeMillis()-time, id));
         }
 
         CommentList data = new CommentList(comments, results.countEntities(FetchOptions.Builder.withLimit(100000)));

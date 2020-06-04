@@ -23,7 +23,6 @@
     <div id="content">
       <h1>Welcome to Lawrence's personal website!</h1>
       <div class=avatar><img src="images/avatar.jpg"/></div>
-      Hello! Click through the links on the top left for more information about me.
       <h3>Comments</h3>
       <form action="/comment-data" method="POST">
         <label for="username">Username (this will be displayed):</label><br>
@@ -38,7 +37,7 @@
         <input type="number" name="perblock" id="perblock" min=5 step=1></input>
         <input type="submit" id="submit" value="Show"></input>
       </form>
-      <button onclick="deleteAllComments()" id="deletebutton">Delete comments</button>
+      <button onclick="deleteAllComments()" id="deletebutton">Delete all comments</button>
       <br><br>
       <div id="commentsection-container"></div>
       <button onclick="showMore()" id="showmorebutton">Show more</button>

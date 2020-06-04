@@ -40,12 +40,14 @@ function createComment(commentData) {
     let res = document.createElement("div");
     res.setAttribute("class", "single-comment");
     
-    let username = document.createElement("div");
-    username.setAttribute("class", "username");
-    username.innerText = commentData.username + ":";
+    let commentHeader = document.createElement("div");
+    commentHeader.setAttribute("class", "comment-header");
 
-    let time = document.createElement("div");
-    time.setAttribute("class", "time");
+    let username = document.createElement("span");
+    username.setAttribute("class", "username");
+    username.innerText = commentData.username;
+
+    let timeText = "";
     let val = -1;
     let units = "";
     if(commentData.time < 1000*60) {
@@ -64,18 +66,25 @@ function createComment(commentData) {
         val = Math.floor(commentData.time/(1000*60*60*24));
         units = "year";
     }
-    time.innerText = val + " " + units;
+    timeText = val + " " + units;
     if(val != 1) {
-        time.innerText += "s";
+        timeText += "s";
     }
-    time.innerText += " ago";
+    timeText += " ago";
+    username.innerText += " (" + timeText + ")";
+
+    let deleteButton = document.createElement("button");
+    deleteButton.innerText = "Delete";
+    deleteButton.setAttribute("class", "deletebutton");
+    deleteButton.onclick = function() {deleteComment(commentData.id)};
 
     let comment = document.createElement("div");
-    comment.setAttribute("class", "comment");
+    comment.setAttribute("class", "comment-content");
     comment.innerText = commentData.comment;
     
-    res.appendChild(username);
-    res.appendChild(time);
+    commentHeader.appendChild(username);
+    commentHeader.appendChild(deleteButton);
+    res.appendChild(commentHeader);
     res.appendChild(comment);
     return res;
 }
@@ -93,4 +102,13 @@ function deleteAllComments() {
     fetch('/delete-data', {method: 'post'}).then(response => {
         getComments();
     });
+}
+
+function deleteComment(id) {
+  const params = new URLSearchParams();
+  console.log(id);
+  params.append('id', id);
+  fetch('/delete-data', {method: 'post', body: params}).then(response => {
+      getComments();
+  });
 }

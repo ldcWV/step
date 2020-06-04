@@ -160,18 +160,21 @@ a {
     margin: 10px 0px;
 }
 
-#commentsection-container .single-comment .username {
+#commentsection-container .single-comment .comment-header {
+    margin-bottom: 18px;
+}
+
+#commentsection-container .single-comment .comment-header .username {
     font-size: 12px;
     font-style: italic;
     float: left;
     width: 50%;
 }
 
-#commentsection-container .single-comment .time {
-    font-size: 12px;
+#commentsection-container .single-comment .comment-header .deletebutton {
     float: right;
-    text-align: right;
-    width: 50%;
+    font-size: 10px;
+    width: 50px;
 }
 
 #commentsection-container .single-comment .comment {
@@ -192,7 +195,7 @@ textarea {
 
 #deletebutton {
     float: right;
-    width: 20%;
+    width: 25%;
 }
 
 #perblock-form #perblock {
