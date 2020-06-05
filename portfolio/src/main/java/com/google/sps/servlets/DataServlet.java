@@ -52,7 +52,9 @@ public class DataServlet extends HttpServlet {
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
             long id = entity.getKey().getId();
-            comments.add(new Comment(username, comment, System.currentTimeMillis()-time, id));
+            long upvotes = (long)entity.getProperty("upvotes");
+            long downvotes = (long)entity.getProperty("downvotes");
+            comments.add(new Comment(username, comment, System.currentTimeMillis()-time, id, upvotes, downvotes));
         }
 
         CommentList data = new CommentList(comments, results.countEntities(FetchOptions.Builder.withLimit(100000)));
@@ -66,6 +68,8 @@ public class DataServlet extends HttpServlet {
         commentEntity.setProperty("username", getClientUsername(request));
         commentEntity.setProperty("comment", getClientComment(request));
         commentEntity.setProperty("time", System.currentTimeMillis());
+        commentEntity.setProperty("upvotes", 0);
+        commentEntity.setProperty("downvotes", 0);
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);

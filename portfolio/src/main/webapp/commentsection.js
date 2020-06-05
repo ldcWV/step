@@ -45,23 +45,26 @@ function createComment(commentData) {
 
     let upvote = document.createElement("div");
     upvote.setAttribute("class", "upvote");
+    upvote.onclick = function() {voteComment(commentData.id, 1)};
     let upvoteSymbol = document.createElement("div");
     upvoteSymbol.setAttribute("class", "upvoteSymbol");
     upvoteSymbol.innerText = "▲";
     let upvoteCount = document.createElement("div");
     upvoteCount.setAttribute("class", "upvoteCount");
-    upvoteCount.innerText = "0";
+    upvoteCount.innerText = commentData.upvotes;
+    console.log(commentData.upvotes);
     upvote.appendChild(upvoteSymbol);
     upvote.appendChild(upvoteCount);
 
     let downvote = document.createElement("div");
     downvote.setAttribute("class", "downvote");
+    downvote.onclick = function() {voteComment(commentData.id, -1)};
     let downvoteSymbol = document.createElement("div");
     downvoteSymbol.setAttribute("class", "downvoteSymbol");
     downvoteSymbol.innerText = "▼";
     let downvoteCount = document.createElement("div");
     downvoteCount.setAttribute("class", "downvoteCount");
-    downvoteCount.innerText = "0";
+    downvoteCount.innerText = commentData.downvotes;
     downvote.appendChild(downvoteSymbol);
     downvote.appendChild(downvoteCount);
 
@@ -143,9 +146,17 @@ function deleteAllComments() {
 
 function deleteComment(id) {
   const params = new URLSearchParams();
-  console.log(id);
   params.append('id', id);
   fetch('/delete-data', {method: 'post', body: params}).then(response => {
       getComments();
   });
+}
+
+function voteComment(id, delta) {
+    const params = new URLSearchParams();
+    params.append('id', id);
+    params.append('delta', delta);
+    fetch('/vote-data', {method: 'post', body: params}).then(response => {
+        getComments();
+    });
 }

@@ -20,11 +20,15 @@ public class Comment {
     private final String comment;
     private final long elapsedTime;
     private final long id;
+    private final long upvotes;
+    private final long downvotes;
     
-    public Comment(String username, String comment, long elapsedTime, long id) {
+    public Comment(String username, String comment, long elapsedTime, long id, long upvotes, long downvotes) {
         this.username = username;
         this.comment = comment;
         this.elapsedTime = elapsedTime;
         this.id = id;
+        this.upvotes = upvotes;
+        this.downvotes = downvotes;
     }
 }
