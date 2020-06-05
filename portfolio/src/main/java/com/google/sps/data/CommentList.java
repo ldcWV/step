@@ -14,17 +14,15 @@
 
 package com.google.sps.data;
 
-// Represents a single comment with a username and the content of the comment.
-public class Comment {
-    private final String username;
-    private final String comment;
-    private final long elapsedTime;
-    private final long id;
+import java.util.ArrayList;
+
+// Represents a partial list of comments
+public class CommentList {
+    private ArrayList<Comment> comments;
+    private int totalCommentCount;
     
-    public Comment(String username, String comment, long elapsedTime, long id) {
-        this.username = username;
-        this.comment = comment;
-        this.elapsedTime = elapsedTime;
-        this.id = id;
+    public CommentList(ArrayList<Comment> comments, int totalCommentCount) {
+        this.comments = new ArrayList<>(comments);
+        this.totalCommentCount = totalCommentCount;
     }
 }
