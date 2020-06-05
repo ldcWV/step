@@ -26,6 +26,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.QueryResultList;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -41,13 +42,17 @@ public class DataServlet extends HttpServlet {
         ArrayList<Comment> comments = new ArrayList<>();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         int lim = getNumComments(request);
-        int cnt = 0;
 
+        FetchOptions fetchOptions = FetchOptions.Builder.withLimit(lim);
         Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
-        PreparedQuery results = datastore.prepare(query);
-        for (Entity entity : results.asIterable()) {
-            cnt++;
-            if(cnt > lim) break;
+        PreparedQuery pq = datastore.prepare(query);
+        QueryResultList<Entity> results;
+        try {
+            results = pq.asQueryResultList(fetchOptions);
+        } catch(Exception e) {
+            return;
+        }
+        for (Entity entity : results) {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
@@ -57,7 +62,7 @@ public class DataServlet extends HttpServlet {
             comments.add(new Comment(username, comment, System.currentTimeMillis()-time, id, upvotes, downvotes));
         }
 
-        CommentList data = new CommentList(comments, results.countEntities(FetchOptions.Builder.withLimit(100000)));
+        CommentList data = new CommentList(comments, pq.countEntities(FetchOptions.Builder.withLimit(100000)));
         String json = new Gson().toJson(data);
         response.getWriter().println(json);
     }

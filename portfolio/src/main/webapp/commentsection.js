@@ -15,7 +15,8 @@
 function getComments() {
     const commentsPerBlock = getCommentsPerBlock();
     document.getElementById('commentsPerBlock').value = parseInt(commentsPerBlock);
-    fetch('/comment-data?numcomments='+(commentsPerBlock*numBlocks)).then(response => response.json()).then((data) => {
+    fetch('/comment-data?numcomments='+(commentsPerBlock*numBlocks))
+    .then(response => response.json()).then(data => {
         let comments = data.comments;
         const commentsContainer = document.getElementById("commentsection-container");
         commentsContainer.innerHTML = "";
