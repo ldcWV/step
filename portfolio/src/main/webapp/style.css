@@ -134,7 +134,7 @@ body {
   color: white;
 }
 
-button {
+#submit, button {
   background-color: darkorange;
   color: white;
   font-family: Arial, Helvetica, sans-serif;
@@ -188,7 +188,7 @@ textarea {
     height: 100px;
 }
 
-#perblock-form {
+#commentsPerBlock-form {
     float: left;
     width: 60%;
 }
@@ -198,7 +198,7 @@ textarea {
     width: 25%;
 }
 
-#perblock-form #perblock {
+#commentsPerBlock-form #commentsPerBlock {
     width: 40px;
 }
 
@@ -216,7 +216,7 @@ textarea {
 .voting .upvote {
     min-width: 50px;
     float: left;
-    margin-right: 10px;
+    padding-right: 5px;
 }
 
 .voting .upvote:hover {
@@ -235,6 +235,7 @@ textarea {
 }
 
 .voting .downvote {
+    padding-left: 5px;
     min-width: 50px;
     float: left;
     white-space: nowrap;

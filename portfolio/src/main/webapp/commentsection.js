@@ -13,26 +13,26 @@
 // limitations under the License.
 
 function getComments() {
-    const perBlock = getCommentsPerBlock();
-    document.getElementById('perblock').value = parseInt(perBlock);
-    fetch('/comment-data?perblock='+(perBlock*blockIdx)).then(response => response.json()).then((data) => {
+    const commentsPerBlock = getCommentsPerBlock();
+    document.getElementById('commentsPerBlock').value = parseInt(commentsPerBlock);
+    fetch('/comment-data?numcomments='+(commentsPerBlock*numBlocks)).then(response => response.json()).then((data) => {
         let comments = data.comments;
         const commentsContainer = document.getElementById("commentsection-container");
         commentsContainer.innerHTML = "";
         comments.forEach((line) => {
             commentsContainer.appendChild(createComment(line));
         });
-        if(data.totalCommentCount <= perBlock * blockIdx) {
+        if(data.totalCommentCount <= commentsPerBlock * numBlocks) {
             let showmorebutton = document.getElementById("showmorebutton");
             showmorebutton.style.display = "none";
         }
     });
 }
 
-var blockIdx = 1;
+var numBlocks = 1;
 
 function showMore() {
-    blockIdx++;
+    numBlocks++;
     getComments();
 }
 
@@ -78,20 +78,27 @@ function createComment(commentData) {
     let timeText = "";
     let val = -1;
     let units = "";
-    if(commentData.time < 1000*60) {
-        val = Math.floor(commentData.time/1000);
+
+    let time = commentData.elapsedTime;
+    let secondInMs = 1000;
+    let minuteInMs = 60*secondInMs;
+    let hourInMs = 60*minuteInMs;
+    let dayInMs = 24*hourInMs;
+    let yearInMs = 365*dayInMs;
+    if(time < minuteInMs) {
+        val = Math.floor(time/secondInMs);
         units = "second";
-    } else if(commentData.time < 1000*60*60) {
-        val = Math.floor(commentData.time/(1000*60));
+    } else if(time < hourInMs) {
+        val = Math.floor(time/minuteInMs);
         units = "minute";
-    } else if(commentData.time < 1000*60*60*24) {
-        val = Math.floor(commentData.time/(1000*60*60));
+    } else if(time < dayInMs) {
+        val = Math.floor(time/hourInMs);
         units = "hour";
-    } else if(commentData.time < 1000*60*60*24*365) {
-        val = Math.floor(commentData.time/(1000*60*60*24));
+    } else if(time < yearInMs) {
+        val = Math.floor(time/dayInMs);
         units = "day";
     } else {
-        val = Math.floor(commentData.time/(1000*60*60*24));
+        val = Math.floor(time/yearInMs);
         units = "year";
     }
     timeText = val + " " + units;
@@ -121,7 +128,7 @@ function createComment(commentData) {
 
 function getCommentsPerBlock() {
     let tmp = (new URL(document.location)).searchParams;
-    let res = tmp.get("perblock");
+    let res = tmp.get("numcomments");
     if(!res || res.length === 0) {
         return "10";
     }

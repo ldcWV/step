@@ -40,7 +40,7 @@ public class DataServlet extends HttpServlet {
         response.setContentType("application/json");
         ArrayList<Comment> comments = new ArrayList<>();
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        int lim = getCommentsPerBlock(request);
+        int lim = getNumComments(request);
         int cnt = 0;
 
         Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
@@ -81,7 +81,7 @@ public class DataServlet extends HttpServlet {
         return request.getParameter("comment");
     }
 
-    private int getCommentsPerBlock(HttpServletRequest request) {
-        return Integer.parseInt(request.getParameter("perblock"));
+    private int getNumComments(HttpServletRequest request) {
+        return Integer.parseInt(request.getParameter("numcomments"));
     }
 }

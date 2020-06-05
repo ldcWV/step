@@ -18,13 +18,13 @@ package com.google.sps.data;
 public class Comment {
     private final String username;
     private final String comment;
-    private final long time;
+    private final long elapsedTime;
     private final long id;
     
-    public Comment(String username, String comment, long time, long id) {
+    public Comment(String username, String comment, long elapsedTime, long id) {
         this.username = username;
         this.comment = comment;
-        this.time = time;
+        this.elapsedTime = elapsedTime;
         this.id = id;
     }
 }
