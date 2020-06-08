@@ -34,44 +34,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login-data")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/username-data")
+public class UsernameServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         UserService userService = UserServiceFactory.getUserService();
-        LoginInfo data = null;
-        if (userService.isUserLoggedIn()) {
-            String userEmail = userService.getCurrentUser().getEmail();
-            String urlToRedirectToAfterUserLogsOut = "/login.html";
-            String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-            String username = getUsername(userService.getCurrentUser().getUserId());
-            if(username == null) {
-                data = new LoginInfo(true, userEmail, null, null, logoutUrl);
-            } else {
-                data = new LoginInfo(true, userEmail, username, null, logoutUrl);
-            }
-        } else {
-            String urlToRedirectToAfterUserLogsIn = "/login.html";
-            String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-            data = new LoginInfo(false, null, null, loginUrl, null);
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect("/login.html");
         }
-        String json = new Gson().toJson(data);
-        response.getWriter().println(json);
     }
 
-    /** Returns the username of the user with id, or null if the user has not set a username. */
-    private String getUsername(String id) {
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query =
-            new Query("UserInfo")
-                .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
-        PreparedQuery results = datastore.prepare(query);
-        Entity entity = results.asSingleEntity();
-        if (entity == null) {
-            return null;
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserService userService = UserServiceFactory.getUserService();
+        if (!userService.isUserLoggedIn()) {
+            response.sendRedirect("/login.html");
+            return;
         }
-        String username = (String) entity.getProperty("username");
-        return username;
+
+        String username = request.getParameter("username");
+        String id = userService.getCurrentUser().getUserId();
+
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity entity = new Entity("UserInfo", id);
+        entity.setProperty("id", id);
+        entity.setProperty("username", username);
+        // The put() function automatically inserts new data or updates existing data based on ID
+        datastore.put(entity);
+
+        response.sendRedirect("/login.html");
     }
 }

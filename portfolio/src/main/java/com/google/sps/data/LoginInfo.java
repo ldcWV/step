@@ -18,12 +18,14 @@ package com.google.sps.data;
 public class LoginInfo {
     private final boolean loggedIn;
     private final String email;
+    private final String username;
     private final String loginUrl;
     private final String logoutUrl;
     
-    public LoginInfo(boolean loggedIn, String email, String loginUrl, String logoutUrl) {
+    public LoginInfo(boolean loggedIn, String email, String username, String loginUrl, String logoutUrl) {
         this.loggedIn = loggedIn;
         this.email = email;
+        this.username = username;
         this.loginUrl = loginUrl;
         this.logoutUrl = logoutUrl;
     }

@@ -20,9 +20,13 @@
       </span>
     </div>
   </head>
-  <body onload="getLoginInfo()">
+  <body>
     <div id="content">
-      <div id="login-container"></div>
+      <form action="/username-data" method="POST">
+        <label for="username">Username (what other users see):</label><br>
+        <input type="text" name="username"></input><br><br>
+        <input type="submit" id="submit"></input>
+      </form>
       <script src="authentication.js"></script>
     </div>
   </body>
