@@ -15,8 +15,7 @@
 function getLoginInfo() {
     let loginContainer = document.getElementById("login-container");
     fetch('/login-data').then(response => response.json()).then(data => {
-        let loggedIn = data.loggedIn;
-        if(loggedIn) {
+        if(data.loggedIn) {
             loginContainer.appendChild(makeParagraph("You are already logged in."));
             
             let username = data.username;

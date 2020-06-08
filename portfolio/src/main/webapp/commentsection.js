@@ -12,6 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+function initComments() {
+    getComments();
+    checkUsername();
+}
+
 function getComments() {
     const commentsPerBlock = getCommentsPerBlock();
     document.getElementById('commentsPerBlock').value = parseInt(commentsPerBlock);
@@ -26,6 +31,24 @@ function getComments() {
         if(data.totalCommentCount <= commentsPerBlock * numBlocks) {
             let showmorebutton = document.getElementById("showmorebutton");
             showmorebutton.style.display = "none";
+        }
+    });
+}
+
+function checkUsername() {
+    let form = document.getElementById('commentForm');
+    let mustLogInToComment = document.getElementById('mustLogInToComment');
+
+    fetch('/login-data').then(response => response.json()).then(data => {
+        let canComment = data.loggedIn && data.username != null;
+        if(canComment) {
+            console.log("1");
+            form.style.display = "inline";
+            mustLogInToComment.display = "none";
+        } else {
+            console.log("2");
+            form.style.display = "none";
+            mustLogInToComment.display = "inline";
         }
     });
 }
@@ -53,7 +76,6 @@ function createComment(commentData) {
     let upvoteCount = document.createElement("div");
     upvoteCount.setAttribute("class", "upvoteCount");
     upvoteCount.innerText = commentData.upvotes;
-    console.log(commentData.upvotes);
     upvote.appendChild(upvoteSymbol);
     upvote.appendChild(upvoteCount);
 
