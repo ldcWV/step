@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.sps.data.LoginInfo;
+import com.google.sps.data.UserInfo;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -55,12 +56,22 @@ public class UsernameServlet extends HttpServlet {
 
         String username = request.getParameter("username");
         String id = userService.getCurrentUser().getUserId();
+        String userEmail = userService.getCurrentUser().getEmail();
+        String urlToRedirectToAfterUserLogsOut = "/login.html";
+        String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
+        String comments = "";
+        long upvotesReceived = 0;
+        long downvotesReceived = 0;
 
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity = new Entity("UserInfo", id);
         entity.setProperty("id", id);
+        entity.setProperty("email", userEmail);
         entity.setProperty("username", username);
-        // The put() function automatically inserts new data or updates existing data based on ID
+        entity.setProperty("logouturl", logoutUrl);
+        entity.setProperty("comments", comments);
+        entity.setProperty("upvotesReceived", upvotesReceived);
+        entity.setProperty("downvotesReceived", downvotesReceived);
         datastore.put(entity);
 
         response.sendRedirect("/login.html");

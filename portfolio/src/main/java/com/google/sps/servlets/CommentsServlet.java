@@ -80,6 +80,8 @@ public class CommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 
+        addNewComment(request);
+
         response.sendRedirect("/index.html");
     }
     
@@ -94,5 +96,19 @@ public class CommentsServlet extends HttpServlet {
 
     private int getNumComments(HttpServletRequest request) {
         return Integer.parseInt(request.getParameter("numcomments"));
+    }
+    
+    private void addNewComment(HttpServletRequest request) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        String id = userService.getCurrentUser().getUserId();
+        Entity userInfoEntity = Utils.getEntity(id);
+        String oldComments = (String)userInfoEntity.getProperty("comments");
+
+        oldComments += " ";
+        oldComments += getClientComment(request);
+
+        userInfoEntity.setProperty("comments", oldComments);
+
+        datastore.put(userInfoEntity);
     }
 }

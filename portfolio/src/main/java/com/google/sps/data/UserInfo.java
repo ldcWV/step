@@ -14,19 +14,19 @@
 
 package com.google.sps.data;
 
-// Represents the authentication data of a user
-public class LoginInfo {
-    public final boolean loggedIn;
-    public final String email;
-    public final String username;
-    public final String loginUrl;
-    public final String logoutUrl;
+import java.util.ArrayList;
+
+// Represents the information displayed on user's profile page
+public class UserInfo {
+    public final LoginInfo loginInfo;
+    public String comments;
+    public long upvotesReceived;
+    public long downvotesReceived;
     
-    public LoginInfo(boolean loggedIn, String email, String username, String loginUrl, String logoutUrl) {
-        this.loggedIn = loggedIn;
-        this.email = email;
-        this.username = username;
-        this.loginUrl = loginUrl;
-        this.logoutUrl = logoutUrl;
+    public UserInfo(LoginInfo loginInfo, String comments, long upvotesReceived, long downvotesRecieved) {
+        this.loginInfo = loginInfo;
+        this.comments = comments;
+        this.upvotesReceived = upvotesReceived;
+        this.downvotesReceived = downvotesReceived;
     }
 }
