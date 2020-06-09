@@ -15,20 +15,18 @@
 package com.google.sps.data;
 
 // Represents a single comment with a username and the content of the comment.
-public class Comment {
+public class LoginInfo {
+    private final boolean loggedIn;
+    private final String email;
     private final String username;
-    private final String comment;
-    private final long elapsedTime;
-    private final long id;
-    private final long upvotes;
-    private final long downvotes;
+    private final String loginUrl;
+    private final String logoutUrl;
     
-    public Comment(String username, String comment, long elapsedTime, long id, long upvotes, long downvotes) {
+    public LoginInfo(boolean loggedIn, String email, String username, String loginUrl, String logoutUrl) {
+        this.loggedIn = loggedIn;
+        this.email = email;
         this.username = username;
-        this.comment = comment;
-        this.elapsedTime = elapsedTime;
-        this.id = id;
-        this.upvotes = upvotes;
-        this.downvotes = downvotes;
+        this.loginUrl = loginUrl;
+        this.logoutUrl = logoutUrl;
     }
 }

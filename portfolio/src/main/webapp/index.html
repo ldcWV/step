@@ -11,23 +11,23 @@
         <a href="index.html">Home</a>
         <a href="aboutme.html">About Me</a>
         <a href="projects.html">Projects</a>
-      </span>
-      <span class=otherlinks>
-        <a href="resume.pdf">Resume</a>
         <a href="https://www.linkedin.com/in/lawrence-chen-6ab742158/">LinkedIn</a>
         <a href="https://github.com/ldcWV">GitHub</a>
+        <a href="resume.pdf">Resume</a>
+      </span>
+      <span class=otherlinks>
+        <a href="login.html">Log in</a>
       </span>
     </div>
   </head>
-  <body onload="getComments()">
+  <body onload="initComments()">
     <div id="content">
       <h1>Welcome to Lawrence's personal website!</h1>
       <div class=avatar><img src="images/avatar.jpg"/></div>
       <h3>Comments</h3>
-      <form action="/comment-data" method="POST">
-        <label for="username">Username (this will be displayed):</label><br>
-        <input type="text" name="username"></input><br><br>
-        <label for="comment">Comment here:</label><br>
+      <p id="mustLogInToComment">You must log in and create a username to comment.</p>
+      <form action="/comment-data" method="POST" id="commentForm">
+        <label for="comment">Write something:</label><br>
         <textarea name="comment"></textarea><br>
         <input type="submit" id="submit"></input>
       </form>

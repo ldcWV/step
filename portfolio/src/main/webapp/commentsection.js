@@ -12,10 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+function initComments() {
+    getComments();
+    checkUsername();
+}
+
 function getComments() {
     const commentsPerBlock = getCommentsPerBlock();
     document.getElementById('commentsPerBlock').value = parseInt(commentsPerBlock);
-    fetch('/comment-data?numcomments='+(commentsPerBlock*numBlocks)).then(response => response.json()).then((data) => {
+    fetch('/comment-data?numcomments='+(commentsPerBlock*numBlocks))
+    .then(response => response.json()).then(data => {
         let comments = data.comments;
         const commentsContainer = document.getElementById("commentsection-container");
         commentsContainer.innerHTML = "";
@@ -25,6 +31,22 @@ function getComments() {
         if(data.totalCommentCount <= commentsPerBlock * numBlocks) {
             let showmorebutton = document.getElementById("showmorebutton");
             showmorebutton.style.display = "none";
+        }
+    });
+}
+
+function checkUsername() {
+    let form = document.getElementById('commentForm');
+    let mustLogInToComment = document.getElementById('mustLogInToComment');
+
+    fetch('/login-data').then(response => response.json()).then(data => {
+        let canComment = data.loggedIn && data.username != null;
+        if(canComment) {
+            form.style.display = "inline";
+            mustLogInToComment.display = "none";
+        } else {
+            form.style.display = "none";
+            mustLogInToComment.display = "inline";
         }
     });
 }
@@ -45,23 +67,25 @@ function createComment(commentData) {
 
     let upvote = document.createElement("div");
     upvote.setAttribute("class", "upvote");
+    upvote.onclick = function() {voteComment(commentData.id, 1)};
     let upvoteSymbol = document.createElement("div");
     upvoteSymbol.setAttribute("class", "upvoteSymbol");
     upvoteSymbol.innerText = "▲";
     let upvoteCount = document.createElement("div");
     upvoteCount.setAttribute("class", "upvoteCount");
-    upvoteCount.innerText = "0";
+    upvoteCount.innerText = commentData.upvotes;
     upvote.appendChild(upvoteSymbol);
     upvote.appendChild(upvoteCount);
 
     let downvote = document.createElement("div");
     downvote.setAttribute("class", "downvote");
+    downvote.onclick = function() {voteComment(commentData.id, -1)};
     let downvoteSymbol = document.createElement("div");
     downvoteSymbol.setAttribute("class", "downvoteSymbol");
     downvoteSymbol.innerText = "▼";
     let downvoteCount = document.createElement("div");
     downvoteCount.setAttribute("class", "downvoteCount");
-    downvoteCount.innerText = "0";
+    downvoteCount.innerText = commentData.downvotes;
     downvote.appendChild(downvoteSymbol);
     downvote.appendChild(downvoteCount);
 
@@ -143,9 +167,17 @@ function deleteAllComments() {
 
 function deleteComment(id) {
   const params = new URLSearchParams();
-  console.log(id);
   params.append('id', id);
   fetch('/delete-data', {method: 'post', body: params}).then(response => {
       getComments();
   });
+}
+
+function voteComment(id, delta) {
+    const params = new URLSearchParams();
+    params.append('id', id);
+    params.append('delta', delta);
+    fetch('/vote-data', {method: 'post', body: params}).then(response => {
+        getComments();
+    });
 }
