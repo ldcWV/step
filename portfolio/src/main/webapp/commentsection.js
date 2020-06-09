@@ -42,11 +42,9 @@ function checkUsername() {
     fetch('/login-data').then(response => response.json()).then(data => {
         let canComment = data.loggedIn && data.username != null;
         if(canComment) {
-            console.log("1");
             form.style.display = "inline";
             mustLogInToComment.display = "none";
         } else {
-            console.log("2");
             form.style.display = "none";
             mustLogInToComment.display = "inline";
         }

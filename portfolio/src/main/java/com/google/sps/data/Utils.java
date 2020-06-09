@@ -12,13 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.sps.servlets;
-
+package com.google.sps.data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.sps.data.LoginInfo;
 import com.google.gson.Gson;
-import com.google.sps.data.Utils;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -35,25 +33,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/login-data")
-public class LoginServlet extends HttpServlet {
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
-        UserService userService = UserServiceFactory.getUserService();
-        LoginInfo data = null;
-        if (userService.isUserLoggedIn()) {
-            String userEmail = userService.getCurrentUser().getEmail();
-            String urlToRedirectToAfterUserLogsOut = "/login.html";
-            String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
-            String username = Utils.getUsername(userService.getCurrentUser().getUserId());
-            data = new LoginInfo(true, userEmail, username, null, logoutUrl);
-        } else {
-            String urlToRedirectToAfterUserLogsIn = "/login.html";
-            String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
-            data = new LoginInfo(false, null, null, loginUrl, null);
+// Represents a single comment with a username and the content of the comment.
+public class Utils {
+    /** Returns the username of the user with id, or null if the user has not set a username. */
+    public static String getUsername(String id) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Query query =
+            new Query("UserInfo")
+                .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
+        PreparedQuery results = datastore.prepare(query);
+        Entity entity = results.asSingleEntity();
+        if (entity == null) {
+            return null;
         }
-        String json = new Gson().toJson(data);
-        response.getWriter().println(json);
+        String username = (String) entity.getProperty("username");
+        return username;
     }
 }

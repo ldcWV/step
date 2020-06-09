@@ -16,6 +16,7 @@ package com.google.sps.servlets;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import com.google.sps.data.Utils;
 import com.google.sps.data.Comment;
 import com.google.sps.data.CommentList;
 import com.google.gson.Gson;
@@ -51,11 +52,7 @@ public class CommentsServlet extends HttpServlet {
         Query query = new Query("Comment").addSort("time", SortDirection.DESCENDING);
         PreparedQuery pq = datastore.prepare(query);
         QueryResultList<Entity> results;
-        try {
-            results = pq.asQueryResultList(fetchOptions);
-        } catch(Exception e) {
-            return;
-        }
+        results = pq.asQueryResultList(fetchOptions);
         for (Entity entity : results) {
             String username = (String)entity.getProperty("username");
             String comment = (String)entity.getProperty("comment");
@@ -88,17 +85,7 @@ public class CommentsServlet extends HttpServlet {
     
     private String getClientUsername(HttpServletRequest request) {
         String id = userService.getCurrentUser().getUserId();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-        Query query =
-            new Query("UserInfo")
-                .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
-        PreparedQuery results = datastore.prepare(query);
-        Entity entity = results.asSingleEntity();
-        if (entity == null) {
-            return null;
-        }
-        String username = (String) entity.getProperty("username");
-        return username;
+        return Utils.getUsername(id);
     }
 
     private String getClientComment(HttpServletRequest request) {
