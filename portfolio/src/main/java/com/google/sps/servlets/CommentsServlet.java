@@ -54,7 +54,7 @@ public class CommentsServlet extends HttpServlet {
         QueryResultList<Entity> results;
         results = pq.asQueryResultList(fetchOptions);
         for (Entity entity : results) {
-            String username = (String)entity.getProperty("username");
+            String username = Utils.getUsername((String)entity.getProperty("userID"));
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
             long id = entity.getKey().getId();
@@ -71,7 +71,7 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("username", getClientUsername(request));
+        commentEntity.setProperty("userID", getClientID());
         commentEntity.setProperty("comment", getClientComment(request));
         commentEntity.setProperty("time", System.currentTimeMillis());
         commentEntity.setProperty("upvotes", 0);
@@ -80,12 +80,13 @@ public class CommentsServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 
+        addNewComment(request);
+
         response.sendRedirect("/index.html");
     }
     
-    private String getClientUsername(HttpServletRequest request) {
-        String id = userService.getCurrentUser().getUserId();
-        return Utils.getUsername(id);
+    private String getClientID() {
+        return userService.getCurrentUser().getUserId();
     }
 
     private String getClientComment(HttpServletRequest request) {
@@ -94,5 +95,19 @@ public class CommentsServlet extends HttpServlet {
 
     private int getNumComments(HttpServletRequest request) {
         return Integer.parseInt(request.getParameter("numcomments"));
+    }
+    
+    private void addNewComment(HttpServletRequest request) {
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        String id = userService.getCurrentUser().getUserId();
+        Entity userInfoEntity = Utils.getEntity(id);
+        String oldComments = (String)userInfoEntity.getProperty("comments");
+
+        oldComments += " ";
+        oldComments += getClientComment(request);
+
+        userInfoEntity.setProperty("comments", oldComments);
+
+        datastore.put(userInfoEntity);
     }
 }

@@ -12,11 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.sps.data;
+package com.google.sps.servlets;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.sps.data.LoginInfo;
+import com.google.sps.data.UserInfo;
 import com.google.gson.Gson;
+import com.google.sps.data.Utils;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -33,26 +36,27 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-// Represents a single comment with a username and the content of the comment.
-public class Utils {
-    private static DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+@WebServlet("/profile-data")
+public class ProfileServlet extends HttpServlet {
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+        UserService userService = UserServiceFactory.getUserService();
 
-    public static Entity getEntity(String id) {
-        Query query =
-            new Query("UserInfo")
-                .setFilter(new Query.FilterPredicate("id", Query.FilterOperator.EQUAL, id));
-        PreparedQuery results = datastore.prepare(query);
-        Entity entity = results.asSingleEntity();
-        return entity;
-    }
+        // email and username must be set up
+        String id = userService.getCurrentUser().getUserId();
+        Entity userInfoEntity = Utils.getEntity(id);
+        String userEmail = (String) userInfoEntity.getProperty("email");
+        String username = (String) userInfoEntity.getProperty("username");
+        String logoutUrl = (String) userInfoEntity.getProperty("logouturl");
+        String comments = (String) userInfoEntity.getProperty("comments");
+        long upvotesReceived = (long) userInfoEntity.getProperty("upvotesReceived");
+        long downvotesReceived = (long) userInfoEntity.getProperty("downvotesReceived");
+        
+        LoginInfo loginInfo = new LoginInfo(true, userEmail, username, null, logoutUrl);
+        UserInfo userInfo = new UserInfo(loginInfo, comments, upvotesReceived, downvotesReceived);
 
-    /** Returns the username of the user with id, or null if the user has not set a username. */
-    public static String getUsername(String id) {
-        Entity entity = getEntity(id);
-        if (entity == null) {
-            return null;
-        }
-        String username = (String) entity.getProperty("username");
-        return username;
+        String json = new Gson().toJson(userInfo);
+        response.getWriter().println(json);
     }
 }
