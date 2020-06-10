@@ -13,20 +13,19 @@
 // limitations under the License.
 
 google.charts.load('current', {'packages':['corechart']});
-google.charts.setOnLoadCallback(drawCharacterDistribution);
 
 function loadProfile() {
     let heading = document.getElementById('heading');
     fetch('/profile-data').then(response => response.json()).then(userInfo => {
         heading.innerText = userInfo.loginInfo.username + "'s Profile";
         drawCharacterDistribution(userInfo.comments);
+        drawWordLengthDistribution(userInfo.comments);
+        drawVotingPieChart(userInfo.upvotesReceived, userInfo.downvotesReceived);
     });
 }
 
 function drawCharacterDistribution(comments) {
-    console.log(comments);
     let letters = comments.toLowerCase();
-    console.log(letters);
     let alphabet = "abcdefghijklmnopqrstuvwxyz";
     let rows = [];
     for(i = 0; i < 26; i++) {
@@ -52,4 +51,53 @@ function drawCharacterDistribution(comments) {
     const chart = new google.visualization.BarChart (
         document.getElementById('character-distribution'));
     chart.draw(data, options);
+}
+
+function drawWordLengthDistribution(comments) {
+    let tosplit = ".,;:<>!@#$%^&*()\"/{}[]|\\`~?"
+    let words = comments;
+    for(i = 0; i < tosplit.length; i++) {
+        words = words.split(tosplit.charAt(i));
+        words = words.join(" ");
+    }
+    words = words.split(" ");
+    let arr = [["Word Length"]];
+    for(i = 0; i < words.length; i++) 
+        if(words[i].length != 0) arr.push([words[i].length]);
+    let data = google.visualization.arrayToDataTable(arr);
+
+    const options = {
+        title: 'Word Length Distribution',
+        'width':700,
+        'height':800,
+        histogram: { lastBucketPercentile: 5 }
+    };
+
+    const chart = new google.visualization.Histogram(
+        document.getElementById('wordlength-distribution'));
+    chart.draw(data, options);
+}
+
+function drawVotingPieChart(upvotes, downvotes) {
+    const data = new google.visualization.DataTable();
+  	data.addColumn('string', 'Votes');
+  	data.addColumn('number', 'Count');
+    data.addRows([
+        ['Upvotes received', upvotes],
+        ['Downvotes received', downvotes]
+    ]);
+
+  	const options = {
+    	'title': 'Votes received',
+    	'width':700,
+    	'height':800,
+        slices: {
+        	0: { color: 'green' },
+            1: { color: 'red' }
+        }
+  	};
+
+  	const chart = new google.visualization.PieChart(
+      	document.getElementById('voting-piechart'));
+  	chart.draw(data, options);
 }

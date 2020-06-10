@@ -55,15 +55,28 @@ public class VoteServlet extends HttpServlet {
         } catch(Exception e) {
             return;
         }
+        String userID = (String)commentEntity.getProperty("userID");
 
         if(delta == -1) {
+            // comment vote counter
             long prev = (long) commentEntity.getProperty("downvotes");
             commentEntity.setProperty("downvotes", prev+1);
             datastore.put(commentEntity);
+            // user vote counter
+            Entity userEntity = Utils.getEntity(userID);
+            prev = (long) userEntity.getProperty("downvotesReceived");
+            userEntity.setProperty("downvotesReceived", prev+1);
+            datastore.put(userEntity);
         } else {
+            // comment vote counter
             long prev = (long) commentEntity.getProperty("upvotes");
             commentEntity.setProperty("upvotes", prev+1);
             datastore.put(commentEntity);
+            // user vote counter
+            Entity userEntity = Utils.getEntity(userID);
+            prev = (long) userEntity.getProperty("upvotesReceived");
+            userEntity.setProperty("upvotesReceived", prev+1);
+            datastore.put(userEntity);
         }
     }
 }

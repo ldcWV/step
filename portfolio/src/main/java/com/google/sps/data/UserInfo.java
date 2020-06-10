@@ -23,7 +23,7 @@ public class UserInfo {
     public long upvotesReceived;
     public long downvotesReceived;
     
-    public UserInfo(LoginInfo loginInfo, String comments, long upvotesReceived, long downvotesRecieved) {
+    public UserInfo(LoginInfo loginInfo, String comments, long upvotesReceived, long downvotesReceived) {
         this.loginInfo = loginInfo;
         this.comments = comments;
         this.upvotesReceived = upvotesReceived;

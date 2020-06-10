@@ -54,7 +54,7 @@ public class CommentsServlet extends HttpServlet {
         QueryResultList<Entity> results;
         results = pq.asQueryResultList(fetchOptions);
         for (Entity entity : results) {
-            String username = (String)entity.getProperty("username");
+            String username = Utils.getUsername((String)entity.getProperty("userID"));
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
             long id = entity.getKey().getId();
@@ -71,7 +71,7 @@ public class CommentsServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Entity commentEntity = new Entity("Comment");
-        commentEntity.setProperty("username", getClientUsername(request));
+        commentEntity.setProperty("userID", getClientID());
         commentEntity.setProperty("comment", getClientComment(request));
         commentEntity.setProperty("time", System.currentTimeMillis());
         commentEntity.setProperty("upvotes", 0);
@@ -85,9 +85,8 @@ public class CommentsServlet extends HttpServlet {
         response.sendRedirect("/index.html");
     }
     
-    private String getClientUsername(HttpServletRequest request) {
-        String id = userService.getCurrentUser().getUserId();
-        return Utils.getUsername(id);
+    private String getClientID() {
+        return userService.getCurrentUser().getUserId();
     }
 
     private String getClientComment(HttpServletRequest request) {
