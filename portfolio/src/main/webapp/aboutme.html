@@ -21,7 +21,7 @@
       </span>
     </div>
   </head>
-  <body>
+  <body onload="createMap()">
     <div id="content">
       <h1>About me</h1>
       <p>
@@ -29,6 +29,10 @@
         Carnegie Mellon University studying computer science. I've
         lived in Princeton, NJ since 7th grade.
       </p>
+      My house:
+      <div id="map"></div>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlrOgr8j_TPEuWIERTTulJYx7KiAo09zA"></script>
+      <script src="maps.js"></script>
       <p>
         Some of my hobbies are listening to music and playing video 
         games. I also enjoy playing board games, such as Poker, Avalon,
