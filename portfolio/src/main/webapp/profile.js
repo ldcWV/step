@@ -15,13 +15,49 @@
 google.charts.load('current', {'packages':['corechart']});
 
 function loadProfile() {
-    let heading = document.getElementById('heading');
-    fetch('/profile-data').then(response => response.json()).then(userInfo => {
-        heading.innerText = userInfo.loginInfo.username + "'s Profile";
-        drawCharacterDistribution(userInfo.comments);
-        drawWordLengthDistribution(userInfo.comments);
-        drawVotingPieChart(userInfo.upvotesReceived, userInfo.downvotesReceived);
+    let hasUsername = false;
+    let loginContainer = document.getElementById("login-container");
+    fetch('/login-data').then(response => response.json()).then(data => {
+        if(data.loggedIn) {
+            loginContainer.appendChild(makeParagraph("You are already logged in."));
+            
+            if(data.username == null) {
+                loginContainer.appendChild(makeParagraph("You have not set a username"));
+                loginContainer.appendChild(makeLink("Create username", "/username.html"));
+                loginContainer.appendChild(document.createElement("br"));
+                loginContainer.appendChild(makeLink("Log out", data.logoutUrl));
+            } else {
+                loginContainer.appendChild(makeParagraph("You are signed in as " + data.username));
+                loginContainer.appendChild(makeLink("Log out", data.logoutUrl));
+                hasUsername = true;
+            }
+        } else {
+            loginContainer.appendChild(makeParagraph("You are not logged in."));
+            loginContainer.appendChild(makeLink("Log in", data.loginUrl));
+        }
+        if(hasUsername) {
+            let heading = document.getElementById('heading');
+            fetch('/profile-data').then(response => response.json()).then(userInfo => {
+                heading.innerText = userInfo.loginInfo.username + "'s Profile";
+                drawCharacterDistribution(userInfo.comments);
+                drawWordLengthDistribution(userInfo.comments);
+                drawVotingPieChart(userInfo.upvotesReceived, userInfo.downvotesReceived);
+            });
+        }
     });
+}
+
+function makeParagraph(s) {
+    let res = document.createElement("p");
+    res.innerText = s;
+    return res;
+}
+
+function makeLink(text, url) {
+    let res = document.createElement("a");
+    res.setAttribute("href", url);
+    res.innerText = text;
+    return res;
 }
 
 function drawCharacterDistribution(comments) {

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import com.google.sps.data.LoginInfo;
 import com.google.sps.data.UserInfo;
+import com.google.sps.data.Utils;
 import com.google.gson.Gson;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -50,7 +51,7 @@ public class UsernameServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         UserService userService = UserServiceFactory.getUserService();
         if (!userService.isUserLoggedIn()) {
-            response.sendRedirect("/login.html");
+            response.sendRedirect("/profile.html");
             return;
         }
 
@@ -63,6 +64,13 @@ public class UsernameServlet extends HttpServlet {
         long upvotesReceived = 0;
         long downvotesReceived = 0;
 
+        // check if user has already made a username
+        Entity tmp = Utils.getEntity(id);
+        if(tmp != null) {
+            response.sendRedirect("/profile.html");
+            return;
+        }
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity entity = new Entity("UserInfo", id);
         entity.setProperty("id", id);
@@ -74,6 +82,6 @@ public class UsernameServlet extends HttpServlet {
         entity.setProperty("downvotesReceived", downvotesReceived);
         datastore.put(entity);
 
-        response.sendRedirect("/login.html");
+        response.sendRedirect("/profile.html");
     }
 }

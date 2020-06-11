@@ -44,12 +44,12 @@ public class LoginServlet extends HttpServlet {
         LoginInfo data = null;
         if (userService.isUserLoggedIn()) {
             String userEmail = userService.getCurrentUser().getEmail();
-            String urlToRedirectToAfterUserLogsOut = "/login.html";
-            String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
             String username = Utils.getUsername(userService.getCurrentUser().getUserId());
+            String urlToRedirectToAfterUserLogsOut = "/profile.html";
+            String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
             data = new LoginInfo(true, userEmail, username, null, logoutUrl);
         } else {
-            String urlToRedirectToAfterUserLogsIn = "/login.html";
+            String urlToRedirectToAfterUserLogsIn = "/profile.html";
             String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
             data = new LoginInfo(false, null, null, loginUrl, null);
         }
