@@ -19,7 +19,7 @@ function loadProfile() {
     let loginContainer = document.getElementById("login-container");
     fetch('/login-data').then(response => response.json()).then(data => {
         if(data.loggedIn) {
-            loginContainer.appendChild(makeParagraph("You are already logged in."));
+            loginContainer.appendChild(makeParagraph("You are logged in as " + data.email));
             
             if(data.username == null) {
                 loginContainer.appendChild(makeParagraph("You have not set a username"));
@@ -27,7 +27,7 @@ function loadProfile() {
                 loginContainer.appendChild(document.createElement("br"));
                 loginContainer.appendChild(makeLink("Log out", data.logoutUrl));
             } else {
-                loginContainer.appendChild(makeParagraph("You are signed in as " + data.username));
+                loginContainer.appendChild(makeParagraph("Your username is " + data.username));
                 loginContainer.appendChild(makeLink("Log out", data.logoutUrl));
                 hasUsername = true;
             }

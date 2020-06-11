@@ -15,8 +15,8 @@
 var userEmail = null;
 var admin = false;
 
-function initComments() {
-    checkUsername();
+const initComments = async () => {
+    await checkUsername();
     getComments();
 }
 
@@ -55,10 +55,10 @@ function checkUsername() {
         let canComment = data.loggedIn && data.username != null;
         if(canComment) {
             form.style.display = "inline";
-            mustLogInToComment.display = "none";
+            mustLogInToComment.style.display = "none";
         } else {
             form.style.display = "none";
-            mustLogInToComment.display = "inline";
+            mustLogInToComment.style.display = "inline";
         }
     });
 }
