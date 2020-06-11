@@ -15,11 +15,13 @@
 /** Creates a map and adds it to the page. */
 function createMap() {
   	const map = new google.maps.Map(
-      	document.getElementById('map'), {
+      	document.getElementById('map'),
+        {
         	center: {lat: 40.371, lng: -74.651},
             zoom: 20,
             mapTypeId: 'satellite'
-      	});
+        }
+    );
     map.setTilt(45);
     const trexMarker = new google.maps.Marker({
     	position: {lat: 40.371, lng: -74.651},
