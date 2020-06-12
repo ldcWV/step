@@ -37,14 +37,42 @@ function loadProfile() {
         }
         if(hasUsername) {
             let heading = document.getElementById('heading');
+            let profilePicture = document.getElementById("profilePicture");
+            let profilePictureForm = document.getElementById("uploadImageForm");
             fetch('/profile-data').then(response => response.json()).then(userInfo => {
                 heading.innerText = userInfo.loginInfo.username + "'s Profile";
+                profilePicture.style.display = "inline";
+                profilePicture.setAttribute("src", userInfo.profilePictureUrl);
+                profilePictureForm.appendChild(makeParagraph("Upload a new profile picture"));
+                profilePictureForm.appendChild(makeFileUpload());
+                profilePictureForm.appendChild(document.createElement("submit"));
+                let submitButton = makeSubmitButton();
+                profilePictureForm.appendChild(submitButton);
+                profilePictureForm.setAttribute("action", userInfo.uploadImageUrl);
+                profilePictureForm.setAttribute("enctype", "multipart/form-data");
+
                 drawCharacterDistribution(userInfo.comments);
                 drawWordLengthDistribution(userInfo.comments);
                 drawVotingPieChart(userInfo.upvotesReceived, userInfo.downvotesReceived);
             });
+        } else {
+            profilePicture.style.display = "none";
         }
     });
+}
+
+function makeSubmitButton() {
+    let res = document.createElement("input");
+    res.setAttribute("id", "submitImage, #submit #  #");
+    res.setAttribute("type", "submit");
+    return res;
+}
+
+function makeFileUpload() {
+    let res = document.createElement("input");
+    res.setAttribute("type", "file");
+    res.setAttribute("name", "image");
+    return res;
 }
 
 function makeParagraph(s) {

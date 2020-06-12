@@ -22,11 +22,15 @@ public class UserInfo {
     public String comments;
     public long upvotesReceived;
     public long downvotesReceived;
+    public String uploadImageUrl;
+    public String profilePictureUrl;
     
-    public UserInfo(LoginInfo loginInfo, String comments, long upvotesReceived, long downvotesReceived) {
+    public UserInfo(LoginInfo loginInfo, String comments, long upvotesReceived, long downvotesReceived, String uploadImageUrl, String profilePictureUrl) {
         this.loginInfo = loginInfo;
         this.comments = comments;
         this.upvotesReceived = upvotesReceived;
         this.downvotesReceived = downvotesReceived;
+        this.uploadImageUrl = uploadImageUrl;
+        this.profilePictureUrl = profilePictureUrl;
     }
 }

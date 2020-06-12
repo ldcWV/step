@@ -20,6 +20,8 @@ import com.google.sps.data.LoginInfo;
 import com.google.sps.data.UserInfo;
 import com.google.gson.Gson;
 import com.google.sps.data.Utils;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -42,6 +44,7 @@ public class ProfileServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
         UserService userService = UserServiceFactory.getUserService();
+        BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 
         // email and username must be set up
         String id = userService.getCurrentUser().getUserId();
@@ -52,9 +55,11 @@ public class ProfileServlet extends HttpServlet {
         String comments = (String) userInfoEntity.getProperty("comments");
         long upvotesReceived = (long) userInfoEntity.getProperty("upvotesReceived");
         long downvotesReceived = (long) userInfoEntity.getProperty("downvotesReceived");
+        String uploadImageUrl = blobstoreService.createUploadUrl("/upload-image");
+        String profilePictureUrl = (String) userInfoEntity.getProperty("profilePictureUrl");
         
         LoginInfo loginInfo = new LoginInfo(true, userEmail, username, null, logoutUrl);
-        UserInfo userInfo = new UserInfo(loginInfo, comments, upvotesReceived, downvotesReceived);
+        UserInfo userInfo = new UserInfo(loginInfo, comments, upvotesReceived, downvotesReceived, uploadImageUrl, profilePictureUrl);
 
         String json = new Gson().toJson(userInfo);
         response.getWriter().println(json);
