@@ -12,9 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-function initComments() {
+var userEmail = null;
+var admin = false;
+
+const initComments = async () => {
+    await checkUsername();
     getComments();
-    checkUsername();
 }
 
 function getComments() {
@@ -38,15 +41,24 @@ function getComments() {
 function checkUsername() {
     let form = document.getElementById('commentForm');
     let mustLogInToComment = document.getElementById('mustLogInToComment');
+    let deleteAllButton = document.getElementById('deletebutton');
 
     fetch('/login-data').then(response => response.json()).then(data => {
+        deleteAllButton.style.display = "none";
+        if(data.loggedIn) {
+            userEmail = data.email.toLowerCase();
+            if(userEmail == "ldchen@google.com") {
+                admin = true;
+                deleteAllButton.style.display = "inline";
+            }
+        }
         let canComment = data.loggedIn && data.username != null;
         if(canComment) {
             form.style.display = "inline";
-            mustLogInToComment.display = "none";
+            mustLogInToComment.style.display = "none";
         } else {
             form.style.display = "none";
-            mustLogInToComment.display = "inline";
+            mustLogInToComment.style.display = "inline";
         }
     });
 }
@@ -142,7 +154,7 @@ function createComment(commentData) {
     comment.innerText = commentData.comment;
     
     commentHeader.appendChild(username);
-    commentHeader.appendChild(deleteButton);
+    if(admin || commentData.email.toLowerCase() == userEmail) commentHeader.appendChild(deleteButton);
 
     res.appendChild(commentHeader);
     res.appendChild(comment);

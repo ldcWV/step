@@ -54,13 +54,15 @@ public class CommentsServlet extends HttpServlet {
         QueryResultList<Entity> results;
         results = pq.asQueryResultList(fetchOptions);
         for (Entity entity : results) {
-            String username = Utils.getUsername((String)entity.getProperty("userID"));
+            String userID = (String)entity.getProperty("userID");
+            String username = Utils.getUsername(userID);
+            String email = (String)Utils.getEntity(userID).getProperty("email");
             String comment = (String)entity.getProperty("comment");
             long time = (long)entity.getProperty("time");
             long id = entity.getKey().getId();
             long upvotes = (long)entity.getProperty("upvotes");
             long downvotes = (long)entity.getProperty("downvotes");
-            comments.add(new Comment(username, comment, System.currentTimeMillis()-time, id, upvotes, downvotes));
+            comments.add(new Comment(username, email, comment, System.currentTimeMillis()-time, id, upvotes, downvotes));
         }
 
         CommentList data = new CommentList(comments, pq.countEntities(FetchOptions.Builder.withLimit(100000)));
