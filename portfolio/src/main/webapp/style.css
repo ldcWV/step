@@ -162,7 +162,6 @@ a {
 }
 
 #commentsection-container .single-comment .user-info {
-    width: 200px;
     margin-right: 20px;
 }
 
@@ -172,14 +171,17 @@ a {
 
 #commentsection-container .single-comment .user-info .username {
     text-align: center;
+    margin-top: 5px;
 }
 
 #commentsection-container .single-comment .comment-info {
     flex-grow: 1;
+    position: relative;
 }
 
 #commentsection-container .single-comment .comment-content {
     margin-right: 10px;
+    margin-bottom: 30px;
 }
 
 #commentsection-container .single-comment .comment-info .comment-header {
@@ -226,8 +228,10 @@ textarea {
 
 .voting {
     height: 20px;
-    margin-top: 5px;
     font-size: 20px;
+    bottom: 0;
+    position: absolute;
+    margin-bottom: 5px;
 }
 
 .voting .upvote {

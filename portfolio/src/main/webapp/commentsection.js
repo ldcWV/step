@@ -171,7 +171,6 @@ function createComment(commentData) {
     profilePicture.style.height = "100px";
 
     resUser.appendChild(profilePicture);
-    resUser.appendChild(document.createElement("br"));
     resUser.appendChild(username);
     resComment.appendChild(commentHeader);
     resComment.appendChild(comment);
