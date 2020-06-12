@@ -18,15 +18,17 @@ package com.google.sps.data;
 public class Comment {
     private final String username;
     private final String email;
+    private final String profilePictureUrl;
     private final String comment;
     private final long elapsedTime;
     private final long id;
     private final long upvotes;
     private final long downvotes;
     
-    public Comment(String username, String email, String comment, long elapsedTime, long id, long upvotes, long downvotes) {
+    public Comment(String username, String email, String profilePictureUrl, String comment, long elapsedTime, long id, long upvotes, long downvotes) {
         this.username = username;
         this.email = email;
+        this.profilePictureUrl = profilePictureUrl;
         this.comment = comment;
         this.elapsedTime = elapsedTime;
         this.id = id;

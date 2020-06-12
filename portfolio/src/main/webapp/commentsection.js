@@ -73,6 +73,12 @@ function showMore() {
 function createComment(commentData) {
     let res = document.createElement("div");
     res.setAttribute("class", "single-comment");
+
+    let resUser = document.createElement("div");
+    resUser.setAttribute("class", "user-info");
+
+    let resComment = document.createElement("div");
+    resComment.setAttribute("class", "comment-info");
     
     let voting = document.createElement("div");
     voting.setAttribute("class", "voting");
@@ -107,10 +113,12 @@ function createComment(commentData) {
     let commentHeader = document.createElement("div");
     commentHeader.setAttribute("class", "comment-header");
 
-    let username = document.createElement("span");
+    let username = document.createElement("div");
     username.setAttribute("class", "username");
     username.innerText = commentData.username;
 
+    let timeInfo = document.createElement("span");
+    timeInfo.setAttribute("class", "time-info");
     let timeText = "";
     let val = -1;
     let units = "";
@@ -142,7 +150,7 @@ function createComment(commentData) {
         timeText += "s";
     }
     timeText += " ago";
-    username.innerText += " (" + timeText + ")";
+    timeInfo.innerText = timeText;
 
     let deleteButton = document.createElement("button");
     deleteButton.innerText = "Delete";
@@ -153,12 +161,23 @@ function createComment(commentData) {
     comment.setAttribute("class", "comment-content");
     comment.innerText = commentData.comment;
     
-    commentHeader.appendChild(username);
+    commentHeader.appendChild(timeInfo);
     if(admin || commentData.email.toLowerCase() == userEmail) commentHeader.appendChild(deleteButton);
 
-    res.appendChild(commentHeader);
-    res.appendChild(comment);
-    res.appendChild(voting);
+    let profilePicture = document.createElement("img");
+    profilePicture.setAttribute("src", commentData.profilePictureUrl);
+    profilePicture.setAttribute("class", "profile-picture");
+    profilePicture.style.width = "100px";
+    profilePicture.style.height = "100px";
+
+    resUser.appendChild(profilePicture);
+    resUser.appendChild(document.createElement("br"));
+    resUser.appendChild(username);
+    resComment.appendChild(commentHeader);
+    resComment.appendChild(comment);
+    resComment.appendChild(voting);
+    res.appendChild(resUser);
+    res.appendChild(resComment);
     return res;
 }
 
