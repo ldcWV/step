@@ -63,6 +63,7 @@ public class UsernameServlet extends HttpServlet {
         String comments = "";
         long upvotesReceived = 0;
         long downvotesReceived = 0;
+        String profilePictureUrl = "images/defaultProfilePicture.jpg";
 
         // check if user has already made a username
         Entity tmp = Utils.getEntity(id);
@@ -80,6 +81,7 @@ public class UsernameServlet extends HttpServlet {
         entity.setProperty("comments", comments);
         entity.setProperty("upvotesReceived", upvotesReceived);
         entity.setProperty("downvotesReceived", downvotesReceived);
+        entity.setProperty("profilePictureUrl", profilePictureUrl);
         datastore.put(entity);
 
         response.sendRedirect("/profile.html");
