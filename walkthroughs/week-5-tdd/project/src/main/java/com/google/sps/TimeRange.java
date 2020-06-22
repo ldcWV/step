@@ -27,7 +27,7 @@ public final class TimeRange {
   public static final TimeRange WHOLE_DAY = new TimeRange(0, 24 * 60);
 
   /**
-   * A comparator for sorting ranges by their start time in ascending order.
+    * A comparator for sorting ranges by their start time in ascending order.
    */
   public static final Comparator<TimeRange> ORDER_BY_START = new Comparator<TimeRange>() {
     @Override
